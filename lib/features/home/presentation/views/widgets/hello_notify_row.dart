@@ -26,7 +26,10 @@ class HelloNotifyRow extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'صباح الخير !..',
+                  DateTime.now().hour < 12
+                      ? 'صباح الخير !..'
+                      : 'مساء الخير !..',
+
                   style: TextStyle(
                     color: const Color(0xFF949D9E),
                     fontSize: screenWidth * 0.035, // متناسب مع العرض
