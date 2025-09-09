@@ -5,7 +5,6 @@ import 'package:forth_session/core/services/get_it.dart';
 import 'package:forth_session/features/auth/domain/repo/auth_repo.dart';
 import 'package:forth_session/features/auth/presentation/cubits/sign_up/signup_cubit.dart';
 import 'package:forth_session/features/auth/presentation/views/signinview.dart';
-import 'package:forth_session/features/home/presentation/views/homeView.dart';
 
 class Signupview extends StatefulWidget {
   const Signupview({super.key});
@@ -58,7 +57,7 @@ class _SignupviewState extends State<Signupview> {
                     BuildSnackBar(context, 'تم انشاء حساب');
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Homeview()),
+                      MaterialPageRoute(builder: (context) => Signinview()),
                     );
                   }
                   if (state is SignupFailed) {

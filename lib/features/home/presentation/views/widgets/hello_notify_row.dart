@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forth_session/core/helps%20functions/getUserData.dart';
 
 class HelloNotifyRow extends StatelessWidget {
   const HelloNotifyRow({super.key});
@@ -35,7 +36,7 @@ class HelloNotifyRow extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'أحمد مصطفي',
+                  getUser().name,
                   style: TextStyle(
                     color: const Color(0xFF0C0D0D),
                     fontSize: screenWidth * 0.038,

@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:forth_session/core/bloc_observer.dart';
 import 'package:forth_session/core/services/get_it.dart';
 import 'package:forth_session/core/services/sharedPreference_singleton.dart';
-import 'package:forth_session/features/home/presentation/views/homeView.dart';
+import 'package:forth_session/features/auth/presentation/views/signinview.dart';
 import 'package:forth_session/firebase_options.dart';
 import 'package:forth_session/generated/l10n.dart';
 
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       locale: const Locale('ar'), // Arabic locale
       debugShowCheckedModeBanner: false,
-      home: Homeview(),
+      home: Signinview(),
     );
   }
 }
