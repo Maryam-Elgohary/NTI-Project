@@ -347,6 +347,7 @@ class customTextFormField extends StatelessWidget {
     this.contentPadding,
     this.hintStyle,
     this.controller,
+    this.onChanged,
   });
 
   final String hinttext;
@@ -358,9 +359,11 @@ class customTextFormField extends StatelessWidget {
   final EdgeInsets? contentPadding;
   final TextStyle? hintStyle;
   final TextEditingController? controller;
+  final void Function(String)? onChanged;
 
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
       controller: controller,
       obscureText: obscureText,
       onSaved: onSaved,

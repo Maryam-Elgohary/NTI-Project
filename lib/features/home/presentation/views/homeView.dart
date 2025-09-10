@@ -36,7 +36,12 @@ class _HomeviewState extends State<Homeview> {
                   spacing: 20,
                   children: [
                     HelloNotifyRow(),
-                    SearchField(),
+                    SearchField(
+                      products: state is GetProductsSuccess
+                          ? state.products
+                          : [],
+                      state: state, 
+                    ),
                     //    OffersListView(),
                     Most_Row(),
                     Expanded(

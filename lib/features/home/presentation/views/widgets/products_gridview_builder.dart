@@ -36,7 +36,7 @@ class productsGridViewBuilder extends StatelessWidget {
     } else if (state is GetProductsLoading) {
       CircularProgressIndicator();
     } else {
-      return Text("No Products");
+      return Center(child: Text("No Products"));
     }
     return Container();
   }
