@@ -29,10 +29,9 @@ class HelloNotifyRow extends StatelessWidget {
                   DateTime.now().hour < 12
                       ? 'صباح الخير !..'
                       : 'مساء الخير !..',
-
                   style: TextStyle(
                     color: const Color(0xFF949D9E),
-                    fontSize: screenWidth * 0.035, // متناسب مع العرض
+                    fontSize: screenWidth * 0.035,
                     fontFamily: 'Cairo',
                     fontWeight: FontWeight.w400,
                     height: 1.4,
@@ -52,37 +51,53 @@ class HelloNotifyRow extends StatelessWidget {
           ],
         ),
         const Spacer(),
-        Container(
-          width: screenWidth * 0.12,
-          height: screenWidth * 0.12,
-          decoration: const ShapeDecoration(
-            color: Color(0xFFEEF8ED),
-            shape: CircleBorder(),
-          ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Icon(
-                Icons.notifications_outlined,
-                color: const Color(0xFF1B5E37),
-                size: screenWidth * 0.07,
-              ),
-              Positioned(
-                top: screenHeight * 0.02,
-                right: screenWidth * 0.048,
-                child: Container(
-                  width: screenWidth * 0.025,
-                  height: screenWidth * 0.025,
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFFF24035),
-                    shape: OvalBorder(),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        Notification_container(screenWidth: screenWidth, screenHeight: screenHeight),
       ],
+    );
+  }
+}
+
+class Notification_container extends StatelessWidget {
+  const Notification_container({
+    super.key,
+    required this.screenWidth,
+    required this.screenHeight,
+  });
+
+  final double screenWidth;
+  final double screenHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: screenWidth * 0.12,
+      height: screenWidth * 0.12,
+      decoration: const ShapeDecoration(
+        color: Color(0xFFEEF8ED),
+        shape: CircleBorder(),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Icon(
+            Icons.notifications_outlined,
+            color: const Color(0xFF1B5E37),
+            size: screenWidth * 0.07,
+          ),
+          Positioned(
+            top: screenHeight * 0.02,
+            right: screenWidth * 0.048,
+            child: Container(
+              width: screenWidth * 0.025,
+              height: screenWidth * 0.025,
+              decoration: const ShapeDecoration(
+                color: Color(0xFFF24035),
+                shape: OvalBorder(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
