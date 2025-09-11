@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:forth_session/core/services/get_it.dart';
-import 'package:forth_session/features/home/domain/entities/product_entity.dart';
 import 'package:forth_session/features/home/domain/repos/product_repo.dart';
 import 'package:forth_session/features/home/presentation/cubit/get_products/get_products_cubit.dart';
 import 'package:forth_session/features/home/presentation/views/widgets/best_selling_row.dart';
@@ -17,7 +16,6 @@ class Homeview extends StatefulWidget {
 }
 
 class _HomeviewState extends State<Homeview> {
-  late List<ProductEntity> products;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -30,31 +28,15 @@ class _HomeviewState extends State<Homeview> {
           backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.all(15.0),
-            child: BlocBuilder<GetProductsCubit, GetProductsState>(
-              builder: (context, state) {
-                return Column(
-                  spacing: 20,
-                  children: [
-                    HelloNotifyRow(),
-                    SearchField(
-                      products: state is GetProductsSuccess
-                          ? state.products
-                          : [],
-                      state: state, 
-                    ),
-                    //    OffersListView(),
-                    Most_Row(),
-                    Expanded(
-                      child: productsGridViewBuilder(
-                        products: state is GetProductsSuccess
-                            ? state.products
-                            : [],
-                        state: state,
-                      ),
-                    ),
-                  ],
-                );
-              },
+            child: Column(
+              spacing: 20,
+              children: [
+                HelloNotifyRow(),
+                SearchField(isEnabled: false),
+                //    OffersListView(),
+                Most_Row(),
+                Expanded(child: productsGridViewBuilder()),
+              ],
             ),
           ),
         ),

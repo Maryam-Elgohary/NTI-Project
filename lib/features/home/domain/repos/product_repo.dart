@@ -4,4 +4,7 @@ import 'package:forth_session/features/home/domain/entities/product_entity.dart'
 
 abstract class ProductRepo {
   Future<Either<Failure, List<ProductEntity>>> getProducts();
+  Future<Either<Failure, List<ProductEntity>>> SearchProducts({
+    required String ProductName,
+  });
 }

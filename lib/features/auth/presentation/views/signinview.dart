@@ -348,6 +348,7 @@ class customTextFormField extends StatelessWidget {
     this.hintStyle,
     this.controller,
     this.onChanged,
+    this.isEnabled,
   });
 
   final String hinttext;
@@ -360,9 +361,11 @@ class customTextFormField extends StatelessWidget {
   final TextStyle? hintStyle;
   final TextEditingController? controller;
   final void Function(String)? onChanged;
+  final bool? isEnabled;
 
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: isEnabled,
       onChanged: onChanged,
       controller: controller,
       obscureText: obscureText,

@@ -15,7 +15,7 @@ class Firestoreservice implements DataBaseService {
       await firestore.collection(path).add(data);
     }
   }
-
+ 
   @override
   Future getData({required String path, String? docID}) async {
     var data;

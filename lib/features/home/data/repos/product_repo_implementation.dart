@@ -28,4 +28,37 @@ class ProductRepoImplementation extends ProductRepo {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, List<ProductEntity>>> SearchProducts({
+    required String ProductName,
+  }) async {
+    try {
+      if (ProductName.isEmpty) {
+        return left(ServerFailure("Please enter a product name"));
+      }
+
+      final data = await apiServices.get(endPoint: 'products') as List<dynamic>;
+      final products = data
+          .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+      final productEntity = products.map((e) => e.toEntity()).toList();
+      final query = ProductName;
+      final filteredProducts = productEntity
+          .where((p) => p.title!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+      if (filteredProducts.isEmpty) {
+        return left(ServerFailure("No products found matching this name"));
+      } else {
+        return right(filteredProducts);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      } else {
+        return left(ServerFailure(e.toString()));
+      }
+    }
+  }
 }

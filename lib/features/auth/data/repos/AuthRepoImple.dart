@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -7,11 +6,11 @@ import 'package:forth_session/core/errors/execptions.dart';
 import 'package:forth_session/core/errors/failure.dart';
 import 'package:forth_session/core/services/dataBaseService.dart';
 import 'package:forth_session/core/services/firebaseAuth_service.dart';
-import 'package:forth_session/core/services/sharedPreference_singleton.dart';
 import 'package:forth_session/core/utils/backend_endpoints.dart';
 import 'package:forth_session/features/auth/data/models/user_model.dart';
 import 'package:forth_session/features/auth/domain/entities/user_entity.dart';
 import 'package:forth_session/features/auth/domain/repo/auth_repo.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class AuthRepoImplementation extends AuthRepo {
   AuthRepoImplementation({
@@ -106,7 +105,13 @@ class AuthRepoImplementation extends AuthRepo {
 
   @override
   Future saveUserData({required UserEntity user}) async {
-    var jsonData = jsonEncode(UserModel.FromEnitity(user).toJson());
-    await SharPref.setString(BackendEndpoints.getUserDataFromLocal, jsonData);
+    //using shared pref to save user data locally
+    // var jsonData = jsonEncode(UserModel.FromEnitity(user).toJson());
+    // await SharPref.setString(BackendEndpoints.getUserDataFromLocal, jsonData);
+
+    //using hive to save user data locally
+    //make this box take user entity type and only this type
+    var userBox = Hive.box<UserEntity>(BackendEndpoints.hiveBoxName);
+    await userBox.put(BackendEndpoints.hiveUserBoxKey, user);
   }
 }

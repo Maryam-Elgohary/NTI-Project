@@ -1,31 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:forth_session/features/home/domain/entities/product_entity.dart';
-import 'package:forth_session/features/home/presentation/cubit/get_products/get_products_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:forth_session/core/services/get_it.dart';
+import 'package:forth_session/features/home/domain/repos/product_repo.dart';
+import 'package:forth_session/features/home/presentation/cubit/search_products/search_products_cubit.dart';
 import 'package:forth_session/features/home/presentation/views/homeView.dart';
-import 'package:forth_session/features/home/presentation/views/widgets/products_gridview_builder.dart';
 import 'package:forth_session/features/home/presentation/views/widgets/search_field.dart';
+import 'package:forth_session/features/home/presentation/views/widgets/search_products_gridview.dart';
 
-class SearchView extends StatefulWidget {
-  const SearchView({
-    super.key,
-    required this.searchTitle,
-    required this.products,
-    required this.state,
-  });
-  final String searchTitle;
-  final List<ProductEntity> products;
-  final GetProductsState state;
+class SearchView extends StatelessWidget {
+  const SearchView({super.key, this.searchTitle});
+  final String? searchTitle;
 
   @override
-  State<SearchView> createState() => _SearchViewState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) =>
+          SearchProductsCubit(productRepo: getIt<ProductRepo>())
+            ..searchProductsByName(query: searchTitle ?? ""),
+      child: SearchViewBody(searchTitle: searchTitle ?? ""),
+    );
+  }
 }
 
-class _SearchViewState extends State<SearchView> {
+class SearchViewBody extends StatefulWidget {
+  const SearchViewBody({super.key, this.searchTitle});
+  final String? searchTitle;
+
+  @override
+  State<SearchViewBody> createState() => _SearchViewBodyState();
+}
+
+class _SearchViewBodyState extends State<SearchViewBody> {
   late String currentSearch;
 
   @override
   void initState() {
-    currentSearch = widget.searchTitle;
+    currentSearch = widget.searchTitle!;
 
     super.initState();
   }
@@ -59,26 +69,17 @@ class _SearchViewState extends State<SearchView> {
             children: [
               SearchField(
                 initialValue: currentSearch,
-                products: widget.products,
-                state: widget.state,
+                isEnabled: true,
                 onChanged: (value) {
                   setState(() {
                     currentSearch = value;
+                    context.read<SearchProductsCubit>().searchProductsByName(
+                      query: currentSearch,
+                    );
                   });
                 },
               ),
-              Expanded(
-                child: productsGridViewBuilder(
-                  products: widget.products.where((product) {
-                    final title = product.title ?? "";
-                    return title.toLowerCase().contains(
-                      currentSearch.toLowerCase(),
-                    );
-                  }).toList(),
-
-                  state: widget.state,
-                ),
-              ),
+              Expanded(child: SearchProductsGridviewBuilder()),
             ],
           ),
         ),
